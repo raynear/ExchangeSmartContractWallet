@@ -7,8 +7,14 @@ import './IWalletFactory.sol';
 
 contract Wallet {
     address private _factoryAddress;
+    address private _owner;
 
-    constructor(address factory) public {
+    constructor() public {
+        _owner = msg.sender;
+    }
+
+    function init(address factory) external {
+        require(_owner == address(0));
         _factoryAddress = factory;
     }
 

@@ -3,6 +3,7 @@ const Assert = require('truffle-assertions');
 const JSHToken = artifacts.require("JSHToken");
 const WalletFactory = artifacts.require("WalletFactory");
 const Wallet = artifacts.require("Wallet");
+const NewWallet = artifacts.require("NewWallet");
 
 contract("WalletFactory", async accounts => {
     let factory;
@@ -46,6 +47,14 @@ contract("WalletFactory", async accounts => {
         await Assert.reverts(factory.setColdWallet(token.address, user, { from: user }), "Ownable: caller is not the owner", "Ownable Failed");
     });
 
+    it("replaceWalletContract", async () => {
+        newWallet = await NewWallet.new();
+        await factory.replaceWalletContract(newWallet.address);
+        let userWallet = await NewWallet.at(walletAddress);
+        let result = await userWallet.test();
+        console.log(result);
+    });
+
     it("ether transfer", async () => {
         wallet = await Wallet.at(walletAddress);
         let coldBalance = await web3.eth.getBalance(cold);
@@ -84,7 +93,7 @@ contract("WalletFactory", async accounts => {
         var fBalance = await web3.eth.getBalance(factory.address);
         let tokenBalance = await token.balanceOf(cold);
         var balance = await web3.eth.getBalance(cold);
-        factory.sendTokens(
+        let result = await factory.sendTokens(
             [
                 {tokenAddress: token.address, to: user, amount: web3.utils.toWei("0.123", "ether")},
                 {tokenAddress: token.address, to: user, amount: web3.utils.toWei("0.223", "ether")},
@@ -98,7 +107,7 @@ contract("WalletFactory", async accounts => {
                 {tokenAddress:'0x0000000000000000000000000000000000000000', to:user, amount: web3.utils.toWei("0.323", "ether")},
                 {tokenAddress:'0x0000000000000000000000000000000000000000', to:user, amount: web3.utils.toWei("0.423", "ether")},
                 {tokenAddress:'0x0000000000000000000000000000000000000000', to:user, amount: web3.utils.toWei("0.523", "ether")},
-                {tokenAddress:'0x0000000000000000000000000000000000000000', to:user, amount: web3.utils.toWei("0.623", "ether")},,,,
+                {tokenAddress:'0x0000000000000000000000000000000000000000', to:user, amount: web3.utils.toWei("0.623", "ether")},
                 {tokenAddress:'0x0000000000000000000000000000000000000000', to:user, amount: web3.utils.toWei("0.323", "ether")}
             ],
             { from: manager }
@@ -108,9 +117,24 @@ contract("WalletFactory", async accounts => {
         let tokenBalance2 = await token.balanceOf(cold);
         var balance2 = await web3.eth.getBalance(cold);
 
-        console.log(fTokenBalance, fTokenBalance2);
-        console.log(fBalance, fBalance2);
-        console.log(tokenBalance, tokenBalance2);
-        console.log(balance, balance2);
+        result = await Assert.reverts(factory.sendTokens(
+            [
+                {tokenAddress: token.address, to: user, amount: web3.utils.toWei("0.123", "ether")},
+                {tokenAddress: token.address, to: user, amount: web3.utils.toWei("0.223", "ether")},
+                {tokenAddress: token.address, to: user, amount: web3.utils.toWei("0.423", "ether")},
+                {tokenAddress: token.address, to: user, amount: web3.utils.toWei("0.413", "ether")},
+                {tokenAddress: token.address, to: user, amount: web3.utils.toWei("0.433", "ether")},
+                {tokenAddress: token.address, to: user, amount: web3.utils.toWei("0.463", "ether")},
+                {tokenAddress: token.address, to: user, amount: web3.utils.toWei("20.443", "ether")},
+                {tokenAddress:'0x0000000000000000000000000000000000000000', to:user, amount: web3.utils.toWei("0.123", "ether")},
+                {tokenAddress:'0x0000000000000000000000000000000000000000', to:user, amount: web3.utils.toWei("0.223", "ether")},
+                {tokenAddress:'0x0000000000000000000000000000000000000000', to:user, amount: web3.utils.toWei("0.323", "ether")},
+                {tokenAddress:'0x0000000000000000000000000000000000000000', to:user, amount: web3.utils.toWei("0.423", "ether")},
+                {tokenAddress:'0x0000000000000000000000000000000000000000', to:user, amount: web3.utils.toWei("0.523", "ether")},
+                {tokenAddress:'0x0000000000000000000000000000000000000000', to:user, amount: web3.utils.toWei("0.623", "ether")},
+                {tokenAddress:'0x0000000000000000000000000000000000000000', to:user, amount: web3.utils.toWei("0.323", "ether")}
+            ],
+            { from: manager }
+        ));
     });
 });
