@@ -1,17 +1,17 @@
 const Assert = require('truffle-assertions');
 
-const WalletFactory = artifacts.require("WalletFactory");
+const MasterWallet = artifacts.require("MasterWallet");
 
 
-contract("WalletFactory", async accounts => {
-    let factory;
+contract("MasterWallet", async accounts => {
+    let factory, proxy, wallet;
 
     const master = accounts[0];
-    const manager = accounts[3];
-    const user = accounts[2];
+    const manager = accounts[1];
+    const user = accounts[3];
 
     it("deploy test", async () => {
-        factory = await WalletFactory.deployed();
+        factory = await MasterWallet.deployed();
     })
 
     it("setManager", async () => {

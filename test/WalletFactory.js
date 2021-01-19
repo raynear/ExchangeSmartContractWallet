@@ -1,14 +1,15 @@
 const Assert = require('truffle-assertions');
 
 const JSHToken = artifacts.require("JSHToken");
-const WalletFactory = artifacts.require("WalletFactory");
+const MasterWallet = artifacts.require("MasterWallet");
 const Wallet = artifacts.require("Wallet");
-const MasterProxy = artifacts.require("MasterProxy");
-const NewWallet = artifacts.require("NewWallet");
 
-contract("WalletFactory", async accounts => {
+const { deployProxy } = require('@openzeppelin/truffle-upgrades');
+
+contract("MasterWallet", async accounts => {
     let factory;
     let walletAddress;
+    let wallet;
     let token;
 
     const master = accounts[0];
@@ -17,7 +18,9 @@ contract("WalletFactory", async accounts => {
     const user = accounts[3];
 
     it("deploy test", async () => {
-        factory = await WalletFactory.deployed();
+        wallet = await MasterWallet.deployed();
+        proxy = await deployProxy(wallet, [master], {master});
+        factory = await MasterWallet.at(proxy.address);
         console.log("factory address:", factory.address);
     })
 
@@ -47,24 +50,11 @@ contract("WalletFactory", async accounts => {
         await Assert.reverts(factory.setColdWallet(token.address, user, { from: user }), "Ownable: caller is not the owner", "Ownable Failed");
     });
 
-    // it("replaceWalletContract", async () => {
-    //     newWallet = await NewWallet.new();
-    //     let result = await factory.replaceWalletContract(newWallet.address);
-    //     Assert.eventEmitted(result, "WalletChanged");
-    //     let userWallet = await NewWallet.at(walletAddress);
-    //     result = await userWallet.test();
-    //     console.log("is test?", result);
-    // });
-
     it("ether transfer", async () => {
         wallet = await Wallet.at(walletAddress);
-//        wallet = await MasterProxy.at(walletAddress);
-        console.log('walletAddress', walletAddress);
         let coldBalance = await web3.eth.getBalance(cold);
         let result = await factory.getColdWallet('0x0000000000000000000000000000000000000000');
-        console.log(result);
         result = await web3.eth.sendTransaction({ from: user, to: wallet.address, value: web3.utils.toWei("1", "ether")});
-        console.log(result);
         // Assert.eventEmitted(result, 'Transfer');
         let newColdBalance = await web3.eth.getBalance(cold);
         console.log(parseFloat(web3.utils.fromWei(newColdBalance)), parseFloat(web3.utils.fromWei(coldBalance))+parseFloat(web3.utils.fromWei(web3.utils.toWei("1", "ether"))), 'have to increase');
