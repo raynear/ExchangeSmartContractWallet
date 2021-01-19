@@ -6,23 +6,22 @@ import './IERC20.sol';
 import './IWalletFactory.sol';
 
 contract Wallet {
-    address private _factoryAddress;
-    address private _owner;
+    address private _master;
 
     constructor() public {
-        _owner = msg.sender;
+        _master = msg.sender;
     }
 
-    function init(address factory) external {
-        require(_owner == address(0));
-        _factoryAddress = factory;
+    function init(address master) external {
+        require(_master == address(0));
+        _master = master;
     }
 
     function transfer(address ERC20) public {
-        IERC20(ERC20).transfer(IWalletFactory(_factoryAddress).getColdWallet(ERC20), IERC20(ERC20).balanceOf(address(this)));
+        IERC20(ERC20).transfer(IWalletFactory(_master).getColdWallet(ERC20), IERC20(ERC20).balanceOf(address(this)));
     }
 
     receive() external payable {
-        IWalletFactory(_factoryAddress).getColdWallet(address(0)).transfer(msg.value);
+        IWalletFactory(_master).getColdWallet(address(0)).transfer(msg.value);
     }
 }

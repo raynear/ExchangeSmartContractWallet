@@ -4,29 +4,34 @@ pragma experimental ABIEncoderV2;
 
 import './Ownable.sol';
 import './proxy/CloneFactory.sol';
+//import './MasterProxy.sol';
 import './Wallet.sol';
 import './IERC20.sol';
 
 contract WalletFactory is Ownable, CloneFactory {
     mapping(address => address payable) private _coldWallet;
+//    address private _walletProxy;
     address private _wallet;
 
     event ColdWalletChanged(address tokenAddress, address coldWalletAddress);
+    event WalletChanged(address newWalletAddress);
     event WalletCreated(address walletAddress);
 
-    struct withdraw {
+    struct transfer {
         address tokenAddress;
-        address payable to;
+        address payable target;
         uint256 amount;
     }
 
-    constructor() public {
-        _wallet = address(new Wallet());
-        _coldWallet[address(0)] = msg.sender;
+    struct gather {
+        address tokenAddress;
+        address payable target;
     }
 
-    function replaceWalletContract(address newWalletContract) public onlyOwner {
-        _wallet = newWalletContract;
+    constructor() public {
+//        _walletProxy = address(new MasterProxy());
+        _wallet = address(new Wallet());
+        _coldWallet[address(0)] = msg.sender;
     }
 
     function createWallet() public onlyOwner {
@@ -35,13 +40,24 @@ contract WalletFactory is Ownable, CloneFactory {
         emit WalletCreated(newWallet);
     }
 
-    function sendTokens(withdraw[] memory WithdrawList) public payable onlyManager {
+    function replaceWalletContract(address newWalletContract) public onlyOwner {
+        _wallet = newWalletContract;
+        emit WalletChanged(newWalletContract);
+    }
+
+    function sendTokens(transfer[] memory WithdrawList) public payable onlyManager {
         for(uint i=0 ; i<WithdrawList.length ; i++) {
             if(WithdrawList[i].tokenAddress == address(0)) {
-                WithdrawList[i].to.transfer(WithdrawList[i].amount);
+                WithdrawList[i].target.transfer(WithdrawList[i].amount);
             } else {
-                IERC20(WithdrawList[i].tokenAddress).transfer(WithdrawList[i].to, WithdrawList[i].amount);
+                IERC20(WithdrawList[i].tokenAddress).transfer(WithdrawList[i].target, WithdrawList[i].amount);
             }
+        }
+    }
+
+    function gathering(gather[] memory GatheringList) public payable onlyManager {
+        for(uint i=0 ; i<GatheringList.length ; i++) {
+            Wallet(GatheringList[i].target).transfer(GatheringList[i].tokenAddress);
         }
     }
 
@@ -50,8 +66,12 @@ contract WalletFactory is Ownable, CloneFactory {
         emit ColdWalletChanged(tokenAddress, coldWalletAddress);
     }
 
-    function getColdWallet(address tokenAddress) public view returns(address payable){
+    function getColdWallet(address tokenAddress) public view returns(address payable) {
         return _coldWallet[tokenAddress];
+    }
+
+    function getWallet() public view returns(address payable) {
+        return payable(_wallet);
     }
 
     receive() external payable {}

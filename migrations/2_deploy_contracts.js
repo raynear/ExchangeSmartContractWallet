@@ -1,6 +1,7 @@
 const JSHToken = artifacts.require("JSHToken");
 const NBKToken = artifacts.require("NBKToken");
 const WalletFactory = artifacts.require("WalletFactory");
+const MasterProxy = artifacts.require("MasterProxy");
 const Wallet = artifacts.require("Wallet");
 const NewWallet = artifacts.require("NewWallet");
 
