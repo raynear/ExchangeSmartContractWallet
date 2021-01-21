@@ -24,6 +24,18 @@
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 
+require("@babel/polyfill");
+const LedgerWalletProvider = require("truffle-ledger-provider");
+
+const ledgerOptions = {
+    networkId: 4,
+    path: "44'/60'/0'/0",
+    askConfirm: false,
+    accountsLength: 1,
+    accountsOffset: 0
+}
+
+
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -43,9 +55,14 @@ module.exports = {
     // options below to some value.
     //
     development: {
-     host: "127.0.0.1",     // Localhost (default: none)
-     port: 7545,            // Standard Ethereum port (default: none)
-     network_id: "*",       // Any network (default: none)
+      host: "127.0.0.1",     // Localhost (default: none)
+      port: 7545,            // Standard Ethereum port (default: none)
+      network_id: "*",       // Any network (default: none)
+    },
+    rinkeby: {
+      provider: new LedgerWalletProvider(ledgerOptions, "http://url.com"),
+      network_id: 4,
+      gas: 4600000
     },
     // Another network with more advanced options...
     // advanced: {

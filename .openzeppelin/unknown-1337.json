@@ -1,277 +1,70 @@
 {
   "manifestVersion": "3.1",
   "impls": {
-    "cea525d5abfcf2fc24bf1c7277302a79d3132eddcb68219f37ec1939c3c53316": {
-      "address": "0xfA33c9941244A537606B94C35420e08cEc8b8D7B",
-      "txHash": "0xa6e33d3ea783a2cc944062909f4d87bb22ca0ce83c14839d34e5f00e50608a24",
+    "9eb8d0bef59ee02e7b54b75b4d79b9cd3da6098d3487c7075fd689cb399ff2d7": {
+      "address": "0x4A38da486Cbf93fADb37bFd002972F5B07cae348",
+      "txHash": "0x0b624ffb1e5d7b3836e61ab62feb3717072f0d978eaba2d41db00a42ebfa9752",
       "layout": {
         "storage": [
           {
-            "contract": "Ownable",
+            "contract": "Initializable",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "initializing",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:26"
+          },
+          {
+            "contract": "Initializable",
+            "label": "______gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:61"
+          },
+          {
+            "contract": "ContextUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\GSN\\Context.sol:37"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
             "label": "_owner",
             "type": "t_address",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Ownable.sol:19"
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\access\\Ownable.sol:18"
           },
           {
-            "contract": "Ownable",
-            "label": "_newOwner",
-            "type": "t_address",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Ownable.sol:20"
+            "contract": "OwnableUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\access\\Ownable.sol:78"
           },
           {
-            "contract": "Ownable",
+            "contract": "Manageable",
             "label": "_manager",
             "type": "t_mapping(t_address,t_bool)",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Ownable.sol:21"
-          },
-          {
-            "contract": "Initializable",
-            "label": "_initialized",
-            "type": "t_bool",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Initializable.sol:25"
-          },
-          {
-            "contract": "Initializable",
-            "label": "_initializing",
-            "type": "t_bool",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Initializable.sol:30"
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Manageable.sol:21"
           },
           {
             "contract": "MasterWallet",
             "label": "_coldWallet",
             "type": "t_mapping(t_address,t_address_payable)",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:12"
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:15"
           },
           {
             "contract": "MasterWallet",
             "label": "_wallet",
             "type": "t_address",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:13"
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:16"
           },
           {
             "contract": "MasterWallet",
             "label": "_hotRate",
             "type": "t_uint256",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:14"
-          }
-        ],
-        "types": {
-          "t_mapping(t_address,t_address_payable)": {
-            "label": "mapping(address => address payable)"
-          },
-          "t_address": {
-            "label": "address"
-          },
-          "t_uint256": {
-            "label": "uint256"
-          },
-          "t_bool": {
-            "label": "bool"
-          },
-          "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)"
-          }
-        }
-      }
-    },
-    "c2b37669b5bd9bc056cedc470b5989eab0c9b38d2d992750259bad9b87527ed1": {
-      "address": "0x9DAeFdEA861f0c824744657D0E1cdC184CBE06C6",
-      "txHash": "0xdf56424330ddf0f33ddb0a2b1c326daecdc050b39677acb66ec6a00421d99520",
-      "layout": {
-        "storage": [
-          {
-            "contract": "Ownable",
-            "label": "_owner",
-            "type": "t_address",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Ownable.sol:19"
-          },
-          {
-            "contract": "Ownable",
-            "label": "_newOwner",
-            "type": "t_address",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Ownable.sol:20"
-          },
-          {
-            "contract": "Ownable",
-            "label": "_manager",
-            "type": "t_mapping(t_address,t_bool)",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Ownable.sol:21"
-          },
-          {
-            "contract": "Initializable",
-            "label": "_initialized",
-            "type": "t_bool",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Initializable.sol:25"
-          },
-          {
-            "contract": "Initializable",
-            "label": "_initializing",
-            "type": "t_bool",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Initializable.sol:30"
-          },
-          {
-            "contract": "MasterWallet",
-            "label": "_coldWallet",
-            "type": "t_mapping(t_address,t_address_payable)",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:12"
-          },
-          {
-            "contract": "MasterWallet",
-            "label": "_wallet",
-            "type": "t_address",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:13"
-          },
-          {
-            "contract": "MasterWallet",
-            "label": "_hotRate",
-            "type": "t_uint256",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:14"
-          }
-        ],
-        "types": {
-          "t_mapping(t_address,t_address_payable)": {
-            "label": "mapping(address => address payable)"
-          },
-          "t_address": {
-            "label": "address"
-          },
-          "t_uint256": {
-            "label": "uint256"
-          },
-          "t_bool": {
-            "label": "bool"
-          },
-          "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)"
-          }
-        }
-      }
-    },
-    "3c90fd8e41ec38be47df6376cb94cc9dc04ecffe69677130ea5eb766b780f7d8": {
-      "address": "0x76F53A26032a2FFf4a3Fab1f6205fF19f2029B12",
-      "txHash": "0xbdd83a516224cfb2bbd6bb762bfb7b5e851f17a6127b789bcb652365a97dcd62",
-      "layout": {
-        "storage": [
-          {
-            "contract": "Ownable",
-            "label": "_owner",
-            "type": "t_address",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Ownable.sol:19"
-          },
-          {
-            "contract": "Ownable",
-            "label": "_newOwner",
-            "type": "t_address",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Ownable.sol:20"
-          },
-          {
-            "contract": "Ownable",
-            "label": "_manager",
-            "type": "t_mapping(t_address,t_bool)",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Ownable.sol:21"
-          },
-          {
-            "contract": "Initializable",
-            "label": "_initialized",
-            "type": "t_bool",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Initializable.sol:25"
-          },
-          {
-            "contract": "Initializable",
-            "label": "_initializing",
-            "type": "t_bool",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Initializable.sol:30"
-          },
-          {
-            "contract": "MasterWallet",
-            "label": "_coldWallet",
-            "type": "t_mapping(t_address,t_address_payable)",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:12"
-          },
-          {
-            "contract": "MasterWallet",
-            "label": "_wallet",
-            "type": "t_address",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:13"
-          },
-          {
-            "contract": "MasterWallet",
-            "label": "_hotRate",
-            "type": "t_uint256",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:14"
-          }
-        ],
-        "types": {
-          "t_mapping(t_address,t_address_payable)": {
-            "label": "mapping(address => address payable)"
-          },
-          "t_address": {
-            "label": "address"
-          },
-          "t_uint256": {
-            "label": "uint256"
-          },
-          "t_bool": {
-            "label": "bool"
-          },
-          "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)"
-          }
-        }
-      }
-    },
-    "9c9b0635ce7dbff4195d141ead5c0664bb1ad0d458062919e44a31cc6de6f473": {
-      "address": "0x538884f4d1085DC906C0aF4d02e465d9C058Fb9A",
-      "txHash": "0x46876c1024307eb92cc2a3175ace9da214eedbb68445de30210cfa61fb96a44d",
-      "layout": {
-        "storage": [
-          {
-            "contract": "Initializable",
-            "label": "_initialized",
-            "type": "t_bool",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Initializable.sol:25"
-          },
-          {
-            "contract": "Initializable",
-            "label": "_initializing",
-            "type": "t_bool",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Initializable.sol:30"
-          },
-          {
-            "contract": "Ownable",
-            "label": "_owner",
-            "type": "t_address",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Ownable.sol:21"
-          },
-          {
-            "contract": "Ownable",
-            "label": "_newOwner",
-            "type": "t_address",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Ownable.sol:22"
-          },
-          {
-            "contract": "Ownable",
-            "label": "_manager",
-            "type": "t_mapping(t_address,t_bool)",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Ownable.sol:23"
-          },
-          {
-            "contract": "MasterWallet",
-            "label": "_coldWallet",
-            "type": "t_mapping(t_address,t_address_payable)",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:12"
-          },
-          {
-            "contract": "MasterWallet",
-            "label": "_wallet",
-            "type": "t_address",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:13"
-          },
-          {
-            "contract": "MasterWallet",
-            "label": "_hotRate",
-            "type": "t_uint256",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:14"
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:17"
           }
         ],
         "types": {
@@ -286,6 +79,12 @@
           },
           "t_mapping(t_address,t_bool)": {
             "label": "mapping(address => bool)"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
           },
           "t_bool": {
             "label": "bool"
@@ -295,7 +94,7 @@
     }
   },
   "admin": {
-    "address": "0x4cce47b6D6B0e736f4802ee943283cb774AFa6cf",
-    "txHash": "0x33f0e291b3a8311b94f3853a8078cd3b516a9055a268eb5aae94b0ebfd568265"
+    "address": "0x15805AcDd5177b077A80Db10269485F3D85a7974",
+    "txHash": "0x5dc1ad3482c71a71291abf89d80d4e2855e51cb82ffa7e35966590d6dce1f340"
   }
 }

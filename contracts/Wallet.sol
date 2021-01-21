@@ -2,9 +2,9 @@
 
 pragma solidity >=0.6.0 <0.8.0;
 
-import './IERC20.sol';
 import './IMasterWallet.sol';
-import './Initializable.sol';
+import '@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol';
+import '@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol';
 
 contract Wallet is Initializable {
     address private _master;
