@@ -1,9 +1,9 @@
 {
   "manifestVersion": "3.1",
   "impls": {
-    "9eb8d0bef59ee02e7b54b75b4d79b9cd3da6098d3487c7075fd689cb399ff2d7": {
-      "address": "0x4A38da486Cbf93fADb37bFd002972F5B07cae348",
-      "txHash": "0x0b624ffb1e5d7b3836e61ab62feb3717072f0d978eaba2d41db00a42ebfa9752",
+    "05a150daef14b9224b300f9ce2f6ddc8e22047e1708982ec7feb7f7d941852cc": {
+      "address": "0xf3e5e0048243CF8386dC698539eaBeB64229d858",
+      "txHash": "0xfaba5737e1aab95e437d25e559d851b46af5f1596dc74881346d1731a83095b9",
       "layout": {
         "storage": [
           {
@@ -51,7 +51,7 @@
           {
             "contract": "MasterWallet",
             "label": "_coldWallet",
-            "type": "t_mapping(t_address,t_address_payable)",
+            "type": "t_address",
             "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:15"
           },
           {
@@ -68,9 +68,6 @@
           }
         ],
         "types": {
-          "t_mapping(t_address,t_address_payable)": {
-            "label": "mapping(address => address payable)"
-          },
           "t_address": {
             "label": "address"
           },
@@ -94,7 +91,7 @@
     }
   },
   "admin": {
-    "address": "0x15805AcDd5177b077A80Db10269485F3D85a7974",
-    "txHash": "0x5dc1ad3482c71a71291abf89d80d4e2855e51cb82ffa7e35966590d6dce1f340"
+    "address": "0xc7318DA090c22a9cD86039D0B5D5A5e38B0ac896",
+    "txHash": "0xc0bf1fc6e44aa95a0ca33206f3f9c183800919038b93e6bb7e4fa4b0ea0e3a18"
   }
 }

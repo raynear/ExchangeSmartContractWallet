@@ -14,10 +14,10 @@ contract Wallet is Initializable {
     }
 
     function transfer(address ERC20) public {
-        IERC20(ERC20).transfer(IMasterWallet(_master).getColdWallet(ERC20), IERC20(ERC20).balanceOf(address(this)));
+        IERC20(ERC20).transfer(_master, IERC20(ERC20).balanceOf(address(this)));
     }
 
     receive() external payable {
-        IMasterWallet(_master).getColdWallet(address(0)).transfer(msg.value);
+        payable(_master).transfer(msg.value);
     }
 }

@@ -12,17 +12,18 @@ contract MasterWallet is Manageable, CloneFactory {
     using SafeMath for uint256;
     using Address for address;
 
-    mapping(address => address payable) private _coldWallet;
+    address private _coldWallet;
     address private _wallet;
     uint private _hotRate;
 
-    event ColdWalletChanged(address tokenAddress, address coldWalletAddress);
+    event ColdWalletChanged(address coldWalletAddress);
     event WalletCreated(address walletAddress);
+    event EtherReceived(address userWalletAddress);
 
     function initialize(address owner) public initializer {
         __Manageable_init();
         _wallet = address(new Wallet());
-        _coldWallet[address(0)] = payable(owner);
+        _coldWallet = owner;
         _hotRate = 30;
     }
 
@@ -66,36 +67,36 @@ contract MasterWallet is Manageable, CloneFactory {
         uint256 targetValue;
 
         if(tokenAddress == address(0)) {
-            coldBalance = _coldWallet[address(0)].balance;
+            coldBalance = _coldWallet.balance;
             hotBalance = address(this).balance;
 
             targetValue = percent(SafeMath.add(hotBalance,coldBalance), _hotRate);
             // safemath 적용해야함
             if(hotBalance > targetValue) {
-                _coldWallet[address(0)].transfer(SafeMath.sub(hotBalance,targetValue));
+                payable(_coldWallet).transfer(SafeMath.sub(hotBalance,targetValue));
             }
         } else {
-            coldBalance = IERC20(tokenAddress).balanceOf(_coldWallet[tokenAddress]);
+            coldBalance = IERC20(tokenAddress).balanceOf(_coldWallet);
             hotBalance = IERC20(tokenAddress).balanceOf(address(this));
 
             targetValue = percent(SafeMath.add(hotBalance,coldBalance), _hotRate);
             // safemath 적용해야함
             if(hotBalance > targetValue) {
-                IERC20(tokenAddress).transfer(_coldWallet[tokenAddress], SafeMath.sub(hotBalance, targetValue));
+                IERC20(tokenAddress).transfer(_coldWallet, SafeMath.sub(hotBalance, targetValue));
             }
         }
     }
 
-    function setColdWallet(address tokenAddress, address payable coldWalletAddress) public onlyOwner {
-        _coldWallet[tokenAddress] = coldWalletAddress;
-        emit ColdWalletChanged(tokenAddress, coldWalletAddress);
+    function setColdWallet(address coldWalletAddress) public onlyOwner {
+        _coldWallet = coldWalletAddress;
+        emit ColdWalletChanged(coldWalletAddress);
     }
 
-    function getColdWallet(address tokenAddress) public view returns(address payable) {
-        return _coldWallet[tokenAddress];
+    function getColdWallet() public view returns(address) {
+        return _coldWallet;
     }
 
-    function percent(uint256 _value, uint256 _percent) public view returns (uint256)  {
+    function percent(uint256 _value, uint256 _percent) public pure returns (uint256)  {
         uint256 percentage = SafeMath.mul(_percent, 100);
         uint256 roundValue = ceil(_value, percentage);
         uint256 retPercent = SafeMath.div(SafeMath.mul(roundValue, percentage), 10000);
@@ -109,5 +110,6 @@ contract MasterWallet is Manageable, CloneFactory {
     }
 
     receive() external payable {
+        emit EtherReceived(msg.sender);
     }
 }
