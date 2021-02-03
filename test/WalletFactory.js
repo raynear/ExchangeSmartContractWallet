@@ -2,10 +2,11 @@ const Assert = require('truffle-assertions');
 const abiDecoder = require('abi-decoder');
 
 const JSHToken = artifacts.require("JSHToken");
+const NBKToken = artifacts.require("NBKToken");
 const MasterWallet = artifacts.require("MasterWallet");
 const Wallet = artifacts.require("Wallet");
 
-// const { deployProxy, upgradeProxy } = require('@openzeppelin/truffle-upgrades');
+const { deployProxy, upgradeProxy } = require('@openzeppelin/truffle-upgrades');
 
 const fs = require('fs');
 const masterWalletJson = JSON.parse(fs.readFileSync('./test/MasterWallet.json', 'utf8'));
@@ -29,16 +30,17 @@ contract("MasterWallet", async accounts => {
 
     before("before", async () => {
         token = await JSHToken.new("SUHO", "JSH", 10000, {from:master}); 
-        token2 = await JSHToken.new("RAYNEAR", "NBK", 10000, {from:master}); 
+        token2 = await NBKToken.new("NBK", "NBK", 10000000, {from:master}); 
 
-        factory = await MasterWallet.new({from:master});
-        await factory.initialize(master);
+        //factory = await MasterWallet.new({from:master});
+        //await factory.initialize(master);
 
         // have to fail
-        await Assert.reverts(factory.initialize(user));
+        //await Assert.reverts(factory.initialize(user));
 
-        // proxy = await deployProxy(MasterWallet, [master], {master});
-        // factory = await MasterWallet.at(proxy.address);
+        proxy = await deployProxy(MasterWallet, [master], {master});
+        factory = await MasterWallet.at(proxy.address);
+        //console.log("proxy", proxy.address);
         // assert.notEqual(factory.owner(), master, "proxy ok");
     });
 
@@ -61,6 +63,7 @@ contract("MasterWallet", async accounts => {
             // wallet create test
             let res = await factory.createWallet({ from: manager });
             walletAddress = res.logs[0].args.walletAddress;
+            console.log(walletAddress);
 
             // only manager can create wallet
             await Assert.reverts(factory.createWallet({ from: user }));
@@ -91,14 +94,16 @@ contract("MasterWallet", async accounts => {
         it("ether transfer", async () => {
             // if send ether to user wallet it redirect to factorywallet
             wallet = await Wallet.at(walletAddress);
-            let factoryBalance = await web3.eth.getBalance(factory.address);
+            let walletBalance = await web3.eth.getBalance(wallet.address);
             let result = await web3.eth.sendTransaction({ from: user, to: wallet.address, value: web3.utils.toWei("1", "ether")});
-
-            const decodedLogs = abiDecoder.decodeLogs(result.logs);
-            console.log(decodedLogs)
+            //const decodedLogs = abiDecoder.decodeLogs(result.logs);
+            //console.log(decodedLogs, decodedLogs[0].events[0]);
             // Assert.eventEmitted(result, 'Transfer');
-            let newFactoryBalance = await web3.eth.getBalance(factory.address);
-            assert.equal(parseFloat(web3.utils.fromWei(newFactoryBalance)), parseFloat(web3.utils.fromWei(factoryBalance))+parseFloat(web3.utils.fromWei(web3.utils.toWei("1", "ether"))), 'have to increase');
+            let newWalletBalance = await web3.eth.getBalance(wallet.address);
+            assert.equal(parseFloat(web3.utils.fromWei(newWalletBalance)), parseFloat(web3.utils.fromWei(walletBalance))+parseFloat(web3.utils.fromWei(web3.utils.toWei("1", "ether"))), 'have to increase');
+            //원복
+            await factory.gathering([zeroAddress], [wallet.address], {from:manager});
+            factory.sendTokens([zeroAddress], [user], [web3.utils.toWei('1', 'ether')], {from:manager});
         });
 
         it("erc20 transfer", async () => {
@@ -271,14 +276,24 @@ contract("MasterWallet", async accounts => {
             await token2.transfer(userWallet2, web3.utils.toWei("4", "ether"), { from: master });
             await token2.transfer(userWallet3, web3.utils.toWei("5", "ether"), { from: master });
             await token2.transfer(userWallet4, web3.utils.toWei("6", "ether"), { from: master });
+            await web3.eth.sendTransaction({from: user3, to: userWallet1, value:web3.utils.toWei("1", "ether")});
+            await web3.eth.sendTransaction({from: user3, to: userWallet2, value:web3.utils.toWei("2", "ether")});
+            await web3.eth.sendTransaction({from: user3, to: userWallet3, value:web3.utils.toWei("3", "ether")});
+            await web3.eth.sendTransaction({from: user3, to: userWallet4, value:web3.utils.toWei("4", "ether")});
 
             let result = await factory.gathering(
                 [
                     token.address,token.address,
                     token.address,token.address,
                     token2.address,token2.address,
-                    token2.address,token2.address
+                    token2.address,token2.address,
+                    zeroAddress, zeroAddress,
+                    zeroAddress, zeroAddress
                 ], [
+                    userWallet1,
+                    userWallet2,
+                    userWallet3,
+                    userWallet4,
                     userWallet1,
                     userWallet2,
                     userWallet3,
@@ -311,8 +326,27 @@ contract("MasterWallet", async accounts => {
             assert.equal(balance3, 0, "gather fail");
             assert.equal(balance4, 0, "gather fail");
 
-            await token.transfer(master, web3.utils.toWei("10", "ether"), {from:cold});
-            await token2.transfer(master, web3.utils.toWei("18", "ether"), {from:cold});
+            let ethBalance1 = web3.utils.fromWei(await web3.eth.getBalance(userWallet1), "ether");
+            let ethBalance2 = web3.utils.fromWei(await web3.eth.getBalance(userWallet2), "ether");
+            let ethBalance3 = web3.utils.fromWei(await web3.eth.getBalance(userWallet3), "ether");
+            let ethBalance4 = web3.utils.fromWei(await web3.eth.getBalance(userWallet4), "ether");
+            assert.equal(ethBalance1, 0, "gather fail");
+            assert.equal(ethBalance2, 0, "gather fail");
+            assert.equal(ethBalance3, 0, "gather fail");
+            assert.equal(ethBalance4, 0, "gather fail");
+
+            result = await factory.sendTokens(
+                [
+                    token.address, token2.address, zeroAddress
+                ], [
+                    master,master,user3
+                ], [
+                    web3.utils.toWei("10", "ether"),
+                    web3.utils.toWei("18", "ether"),
+                    web3.utils.toWei("10", "ether")
+                ],
+                { from: manager }
+            );
         });
     });
 });

@@ -5,6 +5,7 @@ import './CloneFactory.sol';
 import './Wallet.sol';
 import './Manageable.sol';
 import '@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol';
+import '@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/SafeERC20.sol';
 import '@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol';
 import '@openzeppelin/contracts-ethereum-package/contracts/utils/Address.sol';
 
@@ -18,7 +19,6 @@ contract MasterWallet is Manageable, CloneFactory {
 
     event ColdWalletChanged(address coldWalletAddress);
     event WalletCreated(address walletAddress);
-    event EtherReceived(address userWalletAddress);
 
     function initialize(address owner) public initializer {
         __Manageable_init();
@@ -33,8 +33,8 @@ contract MasterWallet is Manageable, CloneFactory {
     }
 
     function createWallet() public onlyManager {
-        bytes memory _payload = abi.encodeWithSignature("initialize(address)", address(this));
-        address newWallet = createClone(_wallet, _payload);
+        address newWallet = createClone(_wallet);
+        Wallet(payable(newWallet)).initialize(address(this));
         emit WalletCreated(newWallet);
     }
 
@@ -44,12 +44,12 @@ contract MasterWallet is Manageable, CloneFactory {
             if(tokenAddress[i] == address(0)) {
                 payable(target[i]).transfer(amount[i]);
             } else {
-                IERC20(tokenAddress[i]).transfer(target[i], amount[i]);
+                SafeERC20.safeTransfer(IERC20(tokenAddress[i]), target[i], amount[i]);
             }
         }
     }
 
-    function gathering(address[] memory tokenAddress, address[] memory target) public payable onlyManager {
+    function gathering(address[] memory tokenAddress, address[] memory target) public onlyManager {
         for(uint i=0 ; i<tokenAddress.length ; i++) {
             Wallet(payable(target[i])).transfer(tokenAddress[i]);
         }
@@ -71,7 +71,6 @@ contract MasterWallet is Manageable, CloneFactory {
             hotBalance = address(this).balance;
 
             targetValue = percent(SafeMath.add(hotBalance,coldBalance), _hotRate);
-            // safemath 적용해야함
             if(hotBalance > targetValue) {
                 payable(_coldWallet).transfer(SafeMath.sub(hotBalance,targetValue));
             }
@@ -80,9 +79,8 @@ contract MasterWallet is Manageable, CloneFactory {
             hotBalance = IERC20(tokenAddress).balanceOf(address(this));
 
             targetValue = percent(SafeMath.add(hotBalance,coldBalance), _hotRate);
-            // safemath 적용해야함
             if(hotBalance > targetValue) {
-                IERC20(tokenAddress).transfer(_coldWallet, SafeMath.sub(hotBalance, targetValue));
+                SafeERC20.safeTransfer(IERC20(tokenAddress), _coldWallet, SafeMath.sub(hotBalance, targetValue));
             }
         }
     }
@@ -96,7 +94,7 @@ contract MasterWallet is Manageable, CloneFactory {
         return _coldWallet;
     }
 
-    function percent(uint256 _value, uint256 _percent) public pure returns (uint256)  {
+    function percent(uint256 _value, uint256 _percent) internal pure returns (uint256)  {
         uint256 percentage = SafeMath.mul(_percent, 100);
         uint256 roundValue = ceil(_value, percentage);
         uint256 retPercent = SafeMath.div(SafeMath.mul(roundValue, percentage), 10000);
@@ -109,7 +107,5 @@ contract MasterWallet is Manageable, CloneFactory {
         return SafeMath.mul(SafeMath.div(d,m),m);
     }
 
-    receive() external payable {
-        emit EtherReceived(msg.sender);
-    }
+    receive() external payable {}
 }

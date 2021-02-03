@@ -26,6 +26,8 @@
 
 require("@babel/polyfill");
 const LedgerWalletProvider = require("truffle-ledger-provider");
+const HDWalletProvider = require('truffle-hdwallet-provider');
+var mnemonic = '';
 
 const ledgerOptions = {
     networkId: 4,
@@ -60,9 +62,20 @@ module.exports = {
       network_id: "*",       // Any network (default: none)
     },
     rinkeby: {
-      provider: new LedgerWalletProvider(ledgerOptions, "http://url.com"),
+//      provider: new LedgerWalletProvider(ledgerOptions, "http://url.com"),
+      provider: function() {
+        return new HDWalletProvider("75fad522265e340ff6ad218151c933f01b65236206426bf45334af52b36dfde2", "https://rinkeby.infura.io/v3/26efc52b4864486a95ba0158dfc3671e");
+      },
       network_id: 4,
-      gas: 4600000
+      gas: 4000000
+    },
+    mainnet: {
+//      provider: new LedgerWalletProvider(ledgerOptions, "http://url.com"),
+      provider: function() {
+        return new HDWalletProvider("75fad522265e340ff6ad218151c933f01b65236206426bf45334af52b36dfde2", "https://mainnet.infura.io/v3/26efc52b4864486a95ba0158dfc3671e");
+      },
+      network_id: 1,
+      gas: 4000000
     },
     // Another network with more advanced options...
     // advanced: {
