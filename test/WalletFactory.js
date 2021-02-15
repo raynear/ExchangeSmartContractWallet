@@ -1,34 +1,94 @@
+//const path = require('path');
+const fs = require('fs');
+//const solc = require('solc');
+
 const Assert = require('truffle-assertions');
 const abiDecoder = require('abi-decoder');
+//const EthWallet = require('ethereumjs-wallet'); 
+//const EthTx = require('ethereumjs-tx');
+//const Eth = require('ethjs-query');
+//const WalletProvider = require('truffle-wallet-provider');
 
 const JSHToken = artifacts.require("JSHToken");
 const NBKToken = artifacts.require("NBKToken");
 const MasterWallet = artifacts.require("MasterWallet");
 const Wallet = artifacts.require("Wallet");
 
+// const ProxyAdmin = artifacts.require("ProxyAdmin");
+// const AdminUpgradeabilityProxy = artifacts.require("AdminUpgradeabiliyProxy");
+
 const { deployProxy, upgradeProxy } = require('@openzeppelin/truffle-upgrades');
 
-const fs = require('fs');
+// const pkProvider = require('truffle-privatekey-provider');
+// const PrivateKeyProvider = require('truffle-privatekey-provider');
+
+
 const masterWalletJson = JSON.parse(fs.readFileSync('./test/MasterWallet.json', 'utf8'));
 abiDecoder.addABI(masterWalletJson.abi);
+
 
 contract("MasterWallet", async accounts => {
     let factory;
     let walletAddress;
     let wallet;
     let token, token2;
-    // let proxy;
+    let proxy;
 
-    const master = accounts[0];
-    const manager = accounts[1];
-    const cold = accounts[2];
-    const user = accounts[4];
-    const user2 = accounts[5];
-    const user3 = accounts[6];
+    const pks = [
+        "c89bc66f8e5231642aa7120cb876819c48b539659cbda0b1516a92b6174be4e0",
+        "48f836e261674c912a2c3997a97438ee225aafa96ed86d045f13a669dfdf51a0",
+        "c9da919f305ceb6cfc579552b7c3536ec8e43cf35e3655df69fb0842057e53df",
+        "73a5e6d3a27abe6b4d968afaa493cb5dccfa74e5d68ea9a610b8828ef2249d12",
+        "2993fda78a23e44ec67ebd2e4da9133b593ac31ff14e16b723798506a1941b5b",
+        "a3616ec81a2492e5923a7bccc5b9ce25446a457d0664f62a42d50e273cb3b8d0",
+        "bf49eea28cbce00e043fba3b3c394d1ca5147f28df798a65e46d2baddaa27c51",
+        "2e9cbd94a46b6bdabffd910e6b5c3ba73360b147be8befeb664901eaa312d8e4",
+        "7f4cba812875e0b41de46280a743709db97dc44d05a196d0c223c0a65a4da9b3",
+        "ff1be13186d9a0c8f20ebab5e018cf7e76d552f34e9de711d6247605de4f7fe6"
+    ]
+
+    let master;
+    let manager;
+    let cold;
+    let user;
+    let user2;
+    let user3;
 
     const zeroAddress = '0x0000000000000000000000000000000000000000';
 
     before("before", async () => {
+        // for (let i=0 ; i<10 ; i++) {
+        //     let addr = web3.eth.accounts.privateKeyToAccount(pks[i]).address;
+        //     console.log('addr', addr);
+
+        //     await web3.eth.sendTransaction({ from: accounts[i], to: addr, value: web3.utils.toWei("99.8", "ether")});
+        // }
+
+        // for (let i=0 ; i<10 ; i++) {
+        //     await web3.eth.accounts.wallet.add(pks[i]);
+        // }
+        // accountsArray = await web3.eth.getAccounts();
+
+        // for (let i=0 ; i<10 ; i++) {
+        //     accountsArray.push(web3.eth.accounts.wallet[i].address);
+        // }
+        // // accounts = web3.eth.accounts;
+        // console.log(accounts);
+        // // console.log(web3.eth.accounts);
+
+        // accounts = accountsArray;
+
+        console.log(global);
+
+        master = accounts[0];
+        manager = accounts[1];
+        cold = accounts[2];
+        user = accounts[3];
+        user2 = accounts[4];
+        user3 = accounts[5];
+
+        console.log(accounts);
+
         token = await JSHToken.new("SUHO", "JSH", 10000, {from:master}); 
         token2 = await NBKToken.new("NBK", "NBK", 10000000, {from:master}); 
 
@@ -38,10 +98,44 @@ contract("MasterWallet", async accounts => {
         // have to fail
         //await Assert.reverts(factory.initialize(user));
 
-        proxy = await deployProxy(MasterWallet, [master], {master});
+        proxy = await deployProxy(MasterWallet, [master], {from:master});
         factory = await MasterWallet.at(proxy.address);
-        //console.log("proxy", proxy.address);
-        // assert.notEqual(factory.owner(), master, "proxy ok");
+        // console.log("proxy", proxy.address);
+        // console.log("factory", factory.address);
+
+        walletModel = await Wallet.new();
+
+        web3.eth.accounts.wallet.add('0xc89bc66f8e5231642aa7120cb876819c48b539659cbda0b1516a92b6174be4e0');
+        console.log(accounts);
+
+        // proxyAdmin = await ProxyAdmin.new();
+        // adminUpgradeabilityProxy = await AdminUpgradeabilityProxy.new();
+
+        await factory.setWalletModel(walletModel.address);
+
+        // const vanityPK = 'c89bc66f8e5231642aa7120cb876819c48b539659cbda0b1516a92b6174be4e0';
+
+        // const privKeyBuf = Buffer.from(vanityPK, 'hex');
+
+
+        // var wallet = EthWallet.default.fromPrivateKey(privKeyBuf);
+
+        // await web3.eth.sendTransaction({
+        //     from: accounts[9],
+        //     to: wallet.getAddressString(),
+        //     value: web3.utils.toWei("2", "ether"),
+        //     data: '0x'
+        // });
+
+        // provider = new PrivateKeyProvider(vanityPK, '127.0.0.1:7545');
+
+        // web3.setProvider(provider);
+
+        // var result = await new web3.eth.Contract(JSON.parse())
+
+        // walletProxy = await deployProxy(Wallet, [factory.address], {from:wallet.getAddressString()});
+        // factory.setWalletModel(walletProxy.address);
+        // console.log('walletProxy address', walletProxy.address);
     });
 
     beforeEach("beforeEach", async () => {
@@ -61,19 +155,26 @@ contract("MasterWallet", async accounts => {
     describe("create user wallet", () => {
         it("createWallet", async () => {
             // wallet create test
-            let res = await factory.createWallet({ from: manager });
-            walletAddress = res.logs[0].args.walletAddress;
-            console.log(walletAddress);
+            let res = await factory.createWallet(1, { from: manager });
+            walletAddress = res.logs[0].args.walletAddress[0];
+            console.log('walletAddress', walletAddress);
 
             // only manager can create wallet
-            await Assert.reverts(factory.createWallet({ from: user }));
-            await Assert.reverts(factory.createWallet({ from: master }));
+            await Assert.reverts(factory.createWallet(1, { from: user }));
+            await Assert.reverts(factory.createWallet(1, { from: master }));
         });
 
         it("wallet load", async () => {
             wallet = await Wallet.at(walletAddress);
 
             await Assert.reverts(wallet.initialize(user));
+        });
+
+        it('create many', async () => {
+            let res = await factory.createWallet(50, { from: manager });
+            walletAddresses = res.logs[0].args.walletAddress;
+            assert(walletAddresses.length === 50, "have to make 100 address");
+            // console.log('walletAddress', walletAddresses, res.logs);
         });
     });
 
@@ -139,6 +240,7 @@ contract("MasterWallet", async accounts => {
             let factoryBalance2 = await web3.utils.fromWei(await web3.eth.getBalance(factory.address), "ether");
             let coldBalance2 = await web3.utils.fromWei(await web3.eth.getBalance(cold), "ether");
             console.log(factoryBalance1, coldBalance1, '=>', factoryBalance2, coldBalance2);
+            // assert.equal((factoryBalance1+coldBalance1)*0.3, factoryBalance2);
             // 원복
             await web3.eth.sendTransaction({ from: cold, to: user2, value: web3.utils.toWei("39.29", "ether")});
             await factory.sendTokens([zeroAddress], [user2], [web3.utils.toWei("59.69", "ether")], {from:manager});
@@ -152,6 +254,7 @@ contract("MasterWallet", async accounts => {
             let factoryBalance2 = web3.utils.fromWei(await token.balanceOf(factory.address), "ether");
             let coldBalance2 = web3.utils.fromWei(await token.balanceOf(cold), "ether");
             console.log(factoryBalance1, coldBalance1, '=>', factoryBalance2, coldBalance2);
+            // assert.equal((factoryBalance1+coldBalance1)*0.3, factoryBalance2);
 
             await token2.transfer(factory.address, web3.utils.toWei("20", "ether"), { from: master });
             factoryBalance1 = web3.utils.fromWei(await token2.balanceOf(factory.address), "ether");
@@ -160,6 +263,7 @@ contract("MasterWallet", async accounts => {
             factoryBalance2 = web3.utils.fromWei(await token2.balanceOf(factory.address), "ether");
             coldBalance2 = web3.utils.fromWei(await token2.balanceOf(cold), "ether");
             console.log(factoryBalance1, coldBalance1, '=>', factoryBalance2, coldBalance2);
+            // assert.equal((factoryBalance1+coldBalance1)*0.3, factoryBalance2);
         });
 
         it("rebalancing many", async () => {
@@ -180,8 +284,11 @@ contract("MasterWallet", async accounts => {
             let factoryToken2Balance2 = web3.utils.fromWei(await token2.balanceOf(factory.address), "ether");
             let coldToken2Balance2 = web3.utils.fromWei(await token2.balanceOf(cold), "ether");
             console.log(factoryBalance1, coldBalance1, '=>', factoryBalance2, coldBalance2);
+            // assert.equal((factoryBalance1+coldBalance1)*0.3, factoryBalance2);
             console.log(factoryTokenBalance1, coldTokenBalance1, '=>', factoryTokenBalance2, coldTokenBalance2);
+            // assert.equal((factoryTokenBalance1+coldTokenBalance1)*0.3, factoryTokenBalance2);
             console.log(factoryToken2Balance1, coldToken2Balance1, '=>', factoryToken2Balance2, coldToken2Balance2);
+            // assert.equal((factoryToken2Balance1+coldToken2Balance1)*0.3, factoryToken2Balance2);
             // 원복
             await web3.eth.sendTransaction({ from: cold, to: user3, value: web3.utils.toWei("39.29", "ether")});
             await factory.sendTokens([zeroAddress], [user3], [web3.utils.toWei("59.69", "ether")], {from:manager});
@@ -259,14 +366,11 @@ contract("MasterWallet", async accounts => {
         });
 
         it("gathering many", async () => {
-            let res = await factory.createWallet({ from: manager });
-            let userWallet1 = res.logs[0].args.walletAddress;
-            res = await factory.createWallet({ from: manager });
-            let userWallet2 = res.logs[0].args.walletAddress;
-            res = await factory.createWallet({ from: manager });
-            let userWallet3 = res.logs[0].args.walletAddress;
-            res = await factory.createWallet({ from: manager });
-            let userWallet4 = res.logs[0].args.walletAddress;
+            let res = await factory.createWallet(4, { from: manager });
+            let userWallet1 = res.logs[0].args.walletAddress[0];
+            let userWallet2 = res.logs[0].args.walletAddress[1];
+            let userWallet3 = res.logs[0].args.walletAddress[2];
+            let userWallet4 = res.logs[0].args.walletAddress[3];
 
             await token.transfer(userWallet1, web3.utils.toWei("1", "ether"), { from: master });
             await token.transfer(userWallet2, web3.utils.toWei("2", "ether"), { from: master });
@@ -350,3 +454,26 @@ contract("MasterWallet", async accounts => {
         });
     });
 });
+
+// Compile contract
+function compile(fileName, contractName) {
+    const contractPath = path.resolve(__dirname, fileName);
+    const source = fs.readFileSync(contractPath, 'utf8');
+    const input = {
+    language: 'Solidity',
+    sources: {
+        fileName: {
+            content: source,
+        },
+    },
+    settings: {
+        outputSelection: {
+            '*': {
+                '*': ['*'],
+            },
+        },
+    },
+    };
+    const tempFile = JSON.parse(solc.compile(JSON.stringify(input)));
+    const contractFile = tempFile.contracts[fileName][contractName];
+}

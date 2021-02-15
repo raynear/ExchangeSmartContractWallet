@@ -26,7 +26,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 contract CloneFactory {
 
-  function createClone(address _logic) internal returns (address proxy) {
+  function createClone(address _logic) internal returns (address) {
+    return createClone3(_logic);
+  }
+
+  function createClone0(address _logic) internal returns (address proxy) {
     bytes20 targetBytes = bytes20(_logic);
     assembly {
       let clone := mload(0x40)
@@ -34,6 +38,45 @@ contract CloneFactory {
       mstore(add(clone, 0x14), targetBytes)
       mstore(add(clone, 0x28), 0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000)
       proxy := create(0, clone, 0x37)
+    }
+  }
+
+  function createClone1(address _logic/*, bytes memory _data*/) internal returns (address proxy) {
+    bytes20 targetBytes = bytes20(_logic)<<32;
+    assembly {
+      let clone := mload(0x40)
+      mstore(clone, 0x3d602980600a3d3981f3363d3d373d3d3d363d6f000000000000000000000000)
+      mstore(add(clone, 0x14), targetBytes)
+      mstore(add(clone, 0x24), 0x5af43d82803e903d91602757fd5bf30000000000000000000000000000000000)
+      proxy := create(0, clone, 0x33)
+    }
+
+    // if(_data.length > 0) {
+
+    //   (bool success,) = proxy.call(_data);
+    //   require(success);
+    // }
+  }
+
+  function createClone2(address _logic) internal returns (address proxy) {
+    bytes20 targetBytes = bytes20(_logic)<<24;
+    assembly {
+      let clone := mload(0x40)
+      mstore(clone, 0x3d602a80600a3d3981f3363d3d373d3d3d363d70000000000000000000000000)
+      mstore(add(clone, 0x14), targetBytes)
+      mstore(add(clone, 0x25), 0x5af43d82803e903d91602857fd5bf30000000000000000000000000000000000)
+      proxy := create(0, clone, 0x34)
+    }
+  }
+
+  function createClone3(address _logic) internal returns (address proxy) {
+    bytes20 targetBytes = bytes20(_logic)<<16;
+    assembly {
+      let clone := mload(0x40)
+      mstore(clone, 0x3d602b80600a3d3981f3363d3d373d3d3d363d71000000000000000000000000)
+      mstore(add(clone, 0x14), targetBytes)
+      mstore(add(clone, 0x26), 0x5af43d82803e903d91602957fd5bf30000000000000000000000000000000000)
+      proxy := create(0, clone, 0x35)
     }
   }
 
