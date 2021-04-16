@@ -38,18 +38,18 @@ const ledgerOptions = {
     accountsOffset: 0
 }
 
-privateKeys = [
-  "9ebd87b93069f9722fe209719c2eb4da270df11043cb156bbbf916cd1eff94ff",
-  "75fad522265e340ff6ad218151c933f01b65236206426bf45334af52b36dfde2",
-  "c9da919f305ceb6cfc579552b7c3536ec8e43cf35e3655df69fb0842057e53df",
-  "73a5e6d3a27abe6b4d968afaa493cb5dccfa74e5d68ea9a610b8828ef2249d12",
-  "2993fda78a23e44ec67ebd2e4da9133b593ac31ff14e16b723798506a1941b5b",
-  "a3616ec81a2492e5923a7bccc5b9ce25446a457d0664f62a42d50e273cb3b8d0",
-  "bf49eea28cbce00e043fba3b3c394d1ca5147f28df798a65e46d2baddaa27c51",
-  "2e9cbd94a46b6bdabffd910e6b5c3ba73360b147be8befeb664901eaa312d8e4",
-  "7f4cba812875e0b41de46280a743709db97dc44d05a196d0c223c0a65a4da9b3",
-  "ff1be13186d9a0c8f20ebab5e018cf7e76d552f34e9de711d6247605de4f7fe6"
-];
+// privateKeys = [
+//   "9ebd87b93069f9722fe209719c2eb4da270df11043cb156bbbf916cd1eff94ff",
+//   "75fad522265e340ff6ad218151c933f01b65236206426bf45334af52b36dfde2",
+//   "c9da919f305ceb6cfc579552b7c3536ec8e43cf35e3655df69fb0842057e53df",
+//   "73a5e6d3a27abe6b4d968afaa493cb5dccfa74e5d68ea9a610b8828ef2249d12",
+//   "2993fda78a23e44ec67ebd2e4da9133b593ac31ff14e16b723798506a1941b5b",
+//   "a3616ec81a2492e5923a7bccc5b9ce25446a457d0664f62a42d50e273cb3b8d0",
+//   "bf49eea28cbce00e043fba3b3c394d1ca5147f28df798a65e46d2baddaa27c51",
+//   "2e9cbd94a46b6bdabffd910e6b5c3ba73360b147be8befeb664901eaa312d8e4",
+//   "7f4cba812875e0b41de46280a743709db97dc44d05a196d0c223c0a65a4da9b3",
+//   "ff1be13186d9a0c8f20ebab5e018cf7e76d552f34e9de711d6247605de4f7fe6"
+// ];
 
 module.exports = {
   /**
@@ -79,23 +79,24 @@ module.exports = {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 7545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
+      gas: 4000000,
     },
-    rinkeby: {
-//      provider: new LedgerWalletProvider(ledgerOptions, "http://url.com"),
-      provider: function() {
-        return new HDWalletProvider(privateKeys, "https://rinkeby.infura.io/v3/26efc52b4864486a95ba0158dfc3671e");
-      },
-      network_id: 4,
-      gas: 4000000
-    },
-    mainnet: {
-//      provider: new LedgerWalletProvider(ledgerOptions, "http://url.com"),
-      provider: function() {
-        return new HDWalletProvider("75fad522265e340ff6ad218151c933f01b65236206426bf45334af52b36dfde2", "https://mainnet.infura.io/v3/26efc52b4864486a95ba0158dfc3671e");
-      },
-      network_id: 1,
-      gas: 4000000
-    },
+//     rinkeby: {
+// //      provider: new LedgerWalletProvider(ledgerOptions, "http://url.com"),
+//       provider: function() {
+//         return new HDWalletProvider(privateKeys, "https://rinkeby.infura.io/v3/26efc52b4864486a95ba0158dfc3671e");
+//       },
+//       network_id: 4,
+//       gas: 4000000
+//     },
+//     mainnet: {
+// //      provider: new LedgerWalletProvider(ledgerOptions, "http://url.com"),
+//       provider: function() {
+//         return new HDWalletProvider("75fad522265e340ff6ad218151c933f01b65236206426bf45334af52b36dfde2", "https://mainnet.infura.io/v3/26efc52b4864486a95ba0158dfc3671e");
+//       },
+//       network_id: 1,
+//       gas: 4000000
+//     },
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port

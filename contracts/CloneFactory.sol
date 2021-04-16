@@ -26,8 +26,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 contract CloneFactory {
 
-  function createClone(address _logic) internal returns (address) {
-    return createClone3(_logic);
+  function createClone(address _logic, bytes memory _data) internal returns (address) {
+    return createClone3(_logic, _data);
   }
 
   function createClone0(address _logic) internal returns (address proxy) {
@@ -41,7 +41,7 @@ contract CloneFactory {
     }
   }
 
-  function createClone1(address _logic/*, bytes memory _data*/) internal returns (address proxy) {
+  function createClone1(address _logic, bytes memory _data) internal returns (address proxy) {
     bytes20 targetBytes = bytes20(_logic)<<32;
     assembly {
       let clone := mload(0x40)
@@ -51,14 +51,13 @@ contract CloneFactory {
       proxy := create(0, clone, 0x33)
     }
 
-    // if(_data.length > 0) {
-
-    //   (bool success,) = proxy.call(_data);
-    //   require(success);
-    // }
+    if(_data.length > 0) {
+      (bool success,) = proxy.call(_data);
+      require(success);
+    }
   }
 
-  function createClone2(address _logic) internal returns (address proxy) {
+  function createClone2(address _logic, bytes memory _data) internal returns (address proxy) {
     bytes20 targetBytes = bytes20(_logic)<<24;
     assembly {
       let clone := mload(0x40)
@@ -67,9 +66,14 @@ contract CloneFactory {
       mstore(add(clone, 0x25), 0x5af43d82803e903d91602857fd5bf30000000000000000000000000000000000)
       proxy := create(0, clone, 0x34)
     }
+
+    if(_data.length > 0) {
+      (bool success,) = proxy.call(_data);
+      require(success);
+    }
   }
 
-  function createClone3(address _logic) internal returns (address proxy) {
+  function createClone3(address _logic, bytes memory _data) internal returns (address proxy) {
     bytes20 targetBytes = bytes20(_logic)<<16;
     assembly {
       let clone := mload(0x40)
@@ -77,6 +81,11 @@ contract CloneFactory {
       mstore(add(clone, 0x14), targetBytes)
       mstore(add(clone, 0x26), 0x5af43d82803e903d91602957fd5bf30000000000000000000000000000000000)
       proxy := create(0, clone, 0x35)
+    }
+
+    if(_data.length > 0) {
+      (bool success,) = proxy.call(_data);
+      require(success);
     }
   }
 

@@ -14,33 +14,27 @@ contract MasterWallet is Manageable, CloneFactory {
     using SafeMath for uint256;
     using Address for address;
 
-    address private _coldWallet;
+    address private _hotWallet;
     address private _wallet;
-    uint private _hotRate;
 
-    event ColdWalletChanged(address coldWalletAddress);
+    event HotWalletChanged(address hotWalletAddress);
     event WalletCreated(address[] walletAddress);
 
-    function initialize(address owner) public initializer {
+    function initialize(address hotWallet, address walletModel) public initializer {
         __Manageable_init();
-        _coldWallet = owner;
-        _hotRate = 30;
+        _hotWallet = hotWallet;
+        _wallet = walletModel;
     }
 
     function setWalletModel(address wallet) public onlyOwner {
         _wallet = wallet;
     }
 
-    function changeHotColdRate(uint hotRate) public onlyOwner {
-        require(hotRate < 100 && hotRate > 0);
-        _hotRate = hotRate;
-    }
-
     function createWallet(uint n) public onlyManager {
         address[] memory walletList = new address[](n);
-        // bytes memory _payload = abi.encodeWithSignature("initialize(address)", address(this));
+        bytes memory _payload = abi.encodeWithSignature("initialize(address)", address(this));
         for(uint i=0 ; i<n; i++) {
-            address newWallet = createClone(_wallet/*, _payload*/);
+            address newWallet = createClone(_wallet, _payload);
             Wallet(payable(newWallet)).initialize(address(this));
             walletList[i] = newWallet;
         }
@@ -65,43 +59,13 @@ contract MasterWallet is Manageable, CloneFactory {
         }
     }
 
-    function rebalancingMany(address[] memory tokens) public onlyManager {
-        for(uint i=0 ; i<tokens.length ; i++) {
-            rebalancing(tokens[i]);
-        }
+    function setHotWallet(address hotWalletAddress) public onlyOwner {
+        _hotWallet = hotWalletAddress;
+        emit HotWalletChanged(hotWalletAddress);
     }
 
-    function rebalancing(address tokenAddress) public onlyManager {
-        uint256 coldBalance;
-        uint256 hotBalance;
-        uint256 targetValue;
-
-        if(tokenAddress == address(0)) {
-            coldBalance = _coldWallet.balance;
-            hotBalance = address(this).balance;
-
-            targetValue = percent(SafeMath.add(hotBalance,coldBalance), _hotRate);
-            if(hotBalance > targetValue) {
-                payable(_coldWallet).transfer(SafeMath.sub(hotBalance,targetValue));
-            }
-        } else {
-            coldBalance = IERC20(tokenAddress).balanceOf(_coldWallet);
-            hotBalance = IERC20(tokenAddress).balanceOf(address(this));
-
-            targetValue = percent(SafeMath.add(hotBalance,coldBalance), _hotRate);
-            if(hotBalance > targetValue) {
-                SafeERC20.safeTransfer(IERC20(tokenAddress), _coldWallet, SafeMath.sub(hotBalance, targetValue));
-            }
-        }
-    }
-
-    function setColdWallet(address coldWalletAddress) public onlyOwner {
-        _coldWallet = coldWalletAddress;
-        emit ColdWalletChanged(coldWalletAddress);
-    }
-
-    function getColdWallet() public view returns(address) {
-        return _coldWallet;
+    function getHotWallet() public view returns(address) {
+        return _hotWallet;
     }
 
     function percent(uint256 _value, uint256 _percent) internal pure returns (uint256)  {
