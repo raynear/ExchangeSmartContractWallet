@@ -27,10 +27,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 contract CloneFactory {
 
   function createClone(address _logic, bytes memory _data) internal returns (address) {
-    return createClone3(_logic, _data);
+    return createClone0(_logic, _data);
   }
 
-  function createClone0(address _logic) internal returns (address proxy) {
+  function createClone0(address _logic, bytes memory _data) internal returns (address proxy) {
     bytes20 targetBytes = bytes20(_logic);
     assembly {
       let clone := mload(0x40)
@@ -38,6 +38,11 @@ contract CloneFactory {
       mstore(add(clone, 0x14), targetBytes)
       mstore(add(clone, 0x28), 0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000)
       proxy := create(0, clone, 0x37)
+    }
+
+    if(_data.length > 0) {
+      (bool success,) = proxy.call(_data);
+      require(success);
     }
   }
 

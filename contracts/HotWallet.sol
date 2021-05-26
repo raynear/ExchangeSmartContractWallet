@@ -12,6 +12,7 @@ contract HotWallet is Manageable {
     using Address for address;
 
     address private _coldWallet;
+    address private _masterAccount;
     uint private _hotRate;
 
     event ColdWalletChanged(address coldWalletAddress);
@@ -22,12 +23,13 @@ contract HotWallet is Manageable {
         _hotRate = 30;
     }
 
-    function changeHotColdRate(uint hotRate) public onlyOwner {
+    function changeHotRate(uint hotRate) public onlyOwner {
         require(hotRate < 100 && hotRate > 0);
         _hotRate = hotRate;
     }
 
-    function sendTokens(address[] memory tokenAddress, address[] memory target, uint256[] memory amount) public payable onlyManager {
+    function sendTokens(address[] memory tokenAddress, address[] memory target, uint256[] memory amount, uint nonce, bytes signature) public payable onlyManager {
+        require(verify(nonce, signature));
         require(tokenAddress.length == target.length && target.length == amount.length);
         for(uint i=0 ; i<tokenAddress.length ; i++) {
             if(tokenAddress[i] == address(0)) {
@@ -90,5 +92,35 @@ contract HotWallet is Manageable {
         return SafeMath.mul(SafeMath.div(d,m),m);
     }
 
-    receive() external payable {}
+    function getEthSignedMessageHash(uint _nonce) public pure returns (bytes32) {
+        return keccak256(abi.encodePacked(msg.sender, _nonce));
+    }
+
+    function verify(uint _nonce, bytes memory signature) public pure returns (bool) {
+        bytes32 messageHash = getEthSignedMessageHash(_nonce);
+
+        return recoverSigner(messageHash, signature) == _masterAccount;
+    }
+
+    function recoverSigner(bytes32 _ethSignedMessageHash, bytes memory _signature)
+        public pure returns (address)
+    {
+        (bytes32 r, bytes32 s, uint8 v) = splitSignature(_signature);
+
+        return ecrecover(_ethSignedMessageHash, v, r, s);
+    }
+
+    function splitSignature(bytes memory sig)
+        public pure returns (bytes32 r, bytes32 s, uint8 v)
+    {
+        require(sig.length == 65, "invalid signature length");
+
+        assembly {
+            r := mload(add(sig, 32))
+            s := mload(add(sig, 64))
+            v := byte(0, mload(add(sig, 96)))
+        }
+    }
+
+    fallback() external payable {}
 }

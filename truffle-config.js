@@ -38,18 +38,18 @@ const ledgerOptions = {
     accountsOffset: 0
 }
 
-// privateKeys = [
-//   "9ebd87b93069f9722fe209719c2eb4da270df11043cb156bbbf916cd1eff94ff",
-//   "75fad522265e340ff6ad218151c933f01b65236206426bf45334af52b36dfde2",
-//   "c9da919f305ceb6cfc579552b7c3536ec8e43cf35e3655df69fb0842057e53df",
-//   "73a5e6d3a27abe6b4d968afaa493cb5dccfa74e5d68ea9a610b8828ef2249d12",
-//   "2993fda78a23e44ec67ebd2e4da9133b593ac31ff14e16b723798506a1941b5b",
-//   "a3616ec81a2492e5923a7bccc5b9ce25446a457d0664f62a42d50e273cb3b8d0",
-//   "bf49eea28cbce00e043fba3b3c394d1ca5147f28df798a65e46d2baddaa27c51",
-//   "2e9cbd94a46b6bdabffd910e6b5c3ba73360b147be8befeb664901eaa312d8e4",
-//   "7f4cba812875e0b41de46280a743709db97dc44d05a196d0c223c0a65a4da9b3",
-//   "ff1be13186d9a0c8f20ebab5e018cf7e76d552f34e9de711d6247605de4f7fe6"
-// ];
+privateKeys = [
+  "bfd1400b8100f4a86418584de3ffc19c4e03a5f01ec8ca83bdda4eddd4d95f32", 
+  "191a802194607553d725898aa4c65e0e768dca72a378030baebc0956e1cc7d81", 
+  "4efd768a63a6e2da2d002f1b87a7ead63d6dbdb2d56c55861a5871f0d4674da6", 
+  "2e9f7ed424973a62ac7fc28d9c5a56c722b848f0294a1fc88302995ed7d45627", 
+  "0a3c1dcd258e7b503ef2b628c2d8909aa58c9f76356e874cd9cd03a42bf4dfd7", 
+  "175babc0ac3685d23e09faa90d4c765f477eceac66a5e41ed787782cd2eea958", 
+  "f01d20ea0abaeb18c25858d8dea1abb2b19aa389c223026719d9495404d8000b", 
+  "165b46310fcf52d1b8f3669e226f0305684a56b6e5ac2faa11ef2e732b3ee995", 
+  "d7383b279e4d5fc38c5da836ec0e83157395a5a9b1191bd5778bc92fa6474ab8",
+  "c4114052b47e9836a749bc39f6ce0178b17bd3b0e18cd6bf22589a822a40ca50" 
+];
 
 module.exports = {
   /**
@@ -76,19 +76,23 @@ module.exports = {
       // provider: function() {
       //   return new HDWalletProvider(privateKeys, "http://127.0.0.1:7545", 0, 10)
       // },
+      // provider: function() {
+      //   // return new HDWalletProvider(privateKeys, "https://rinkeby.infura.io/v3/26efc52b4864486a95ba0158dfc3671e");
+      //   return new HDWalletProvider(privateKeys, "http://127.0.0.1:7545", 0, 10);
+      // },
       host: "127.0.0.1",     // Localhost (default: none)
       port: 7545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
       gas: 4000000,
     },
-//     rinkeby: {
-// //      provider: new LedgerWalletProvider(ledgerOptions, "http://url.com"),
-//       provider: function() {
-//         return new HDWalletProvider(privateKeys, "https://rinkeby.infura.io/v3/26efc52b4864486a95ba0158dfc3671e");
-//       },
-//       network_id: 4,
-//       gas: 4000000
-//     },
+     rinkeby: {
+ //      provider: new LedgerWalletProvider(ledgerOptions, "http://url.com"),
+       provider: function() {
+         return new HDWalletProvider(privateKeys, "https://rinkeby.infura.io/v3/26efc52b4864486a95ba0158dfc3671e", 0, 10);
+       },
+       network_id: 4,
+       gas: 4000000
+     },
 //     mainnet: {
 // //      provider: new LedgerWalletProvider(ledgerOptions, "http://url.com"),
 //       provider: function() {

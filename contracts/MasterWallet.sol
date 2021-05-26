@@ -35,22 +35,11 @@ contract MasterWallet is Manageable, CloneFactory {
         bytes memory _payload = abi.encodeWithSignature("initialize(address)", address(this));
         for(uint i=0 ; i<n; i++) {
             address newWallet = createClone(_wallet, _payload);
-            Wallet(payable(newWallet)).initialize(address(this));
+            // Wallet(payable(newWallet)).initialize(address(this));
             walletList[i] = newWallet;
         }
 
         emit WalletCreated(walletList);
-    }
-
-    function sendTokens(address[] memory tokenAddress, address[] memory target, uint256[] memory amount) public payable onlyManager {
-        require(tokenAddress.length == target.length && target.length == amount.length);
-        for(uint i=0 ; i<tokenAddress.length ; i++) {
-            if(tokenAddress[i] == address(0)) {
-                payable(target[i]).transfer(amount[i]);
-            } else {
-                SafeERC20.safeTransfer(IERC20(tokenAddress[i]), target[i], amount[i]);
-            }
-        }
     }
 
     function gathering(address[] memory tokenAddress, address[] memory target) public onlyManager {
@@ -68,18 +57,5 @@ contract MasterWallet is Manageable, CloneFactory {
         return _hotWallet;
     }
 
-    function percent(uint256 _value, uint256 _percent) internal pure returns (uint256)  {
-        uint256 percentage = SafeMath.mul(_percent, 100);
-        uint256 roundValue = ceil(_value, percentage);
-        uint256 retPercent = SafeMath.div(SafeMath.mul(roundValue, percentage), 10000);
-        return retPercent;
-    }
-
-    function ceil(uint256 a, uint256 m) internal pure returns (uint256) {
-        uint256 c = SafeMath.add(a,m);
-        uint256 d = SafeMath.sub(c,1);
-        return SafeMath.mul(SafeMath.div(d,m),m);
-    }
-
-    receive() external payable {}
+    fallback() external payable {}
 }

@@ -178,8 +178,8 @@
       }
     },
     "a5783af9b4a4525a1d942fa8ca16a2f4a97b8433b4fce41e903363f48448e507": {
-      "address": "0x6976AEBA01F6ab2E4A8A09Fa7d445697DD75B65e",
-      "txHash": "0xccfbd476e03fa4383c2f122313c2bce9a9e088dfdded47a73b008b68ffd16b8d",
+      "address": "0xf3E32E75f8C4dbA04e9C912d04b0A08Ed8F7316A",
+      "txHash": "0x2750c45002490128a9a607e425e461ea05b1b9bf6a6b5db4834b36692481fda3",
       "layout": {
         "storage": [
           {
@@ -228,13 +228,13 @@
             "contract": "HotWallet",
             "label": "_coldWallet",
             "type": "t_address",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\HotWallet.sol:15"
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\HotWallet.sol:14"
           },
           {
             "contract": "HotWallet",
             "label": "_hotRate",
             "type": "t_uint256",
-            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\HotWallet.sol:16"
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\HotWallet.sol:15"
           }
         ],
         "types": {
@@ -382,8 +382,8 @@
       }
     },
     "eb36e4662583c801375124063ee0c2bdad36f1ff5003ace76d88e5ab4104b8f0": {
-      "address": "0x3B7dFBB106d16BFd01a3290AdB75dddEE9705a0D",
-      "txHash": "0x52a9c9af378000d80c0152706e0d8d45f4d73d91584400ef052e5c2497767126",
+      "address": "0xC1AE91e50e44317403768Cb056C64A84a7d3369c",
+      "txHash": "0xfdc0d58ef72065533e55042d969a0215adde0152770790237d1f12fe7c46c938",
       "layout": {
         "storage": [
           {
@@ -502,10 +502,573 @@
           }
         }
       }
+    },
+    "1573c8709480a668ada50b945a84354d4aceee2b5bce4b6e406f1a2ca35d2bd0": {
+      "address": "0xca0Aca1eFaB26fc8731750B5673fB45a000Db5Ea",
+      "txHash": "0x34fd613ee223254cff8ee4fcc20747b900f477dd365a40a5385e62073e6b94f4",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "initializing",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:26"
+          },
+          {
+            "contract": "Initializable",
+            "label": "______gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:61"
+          },
+          {
+            "contract": "ContextUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\GSN\\Context.sol:37"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\access\\Ownable.sol:18"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\access\\Ownable.sol:78"
+          },
+          {
+            "contract": "Manageable",
+            "label": "_manager",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Manageable.sol:21"
+          },
+          {
+            "contract": "MasterWallet",
+            "label": "_hotWallet",
+            "type": "t_address",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:17"
+          },
+          {
+            "contract": "MasterWallet",
+            "label": "_wallet",
+            "type": "t_address",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:18"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "8623add444790f864fd696681d4be9fedb8cd406bbcbc8b314381a3e9525d299": {
+      "address": "0xB17830F7B702Afd1c3d7753aEd7b6e1d654BB417",
+      "txHash": "0x69732efdc70b639e8b785351697eaa4ad93cb527eb5b4edb1fdaedd0886d8abc",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "initializing",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:26"
+          },
+          {
+            "contract": "Initializable",
+            "label": "______gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:61"
+          },
+          {
+            "contract": "Wallet",
+            "label": "_master",
+            "type": "t_address",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Wallet.sol:11"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "822117f7caee367f40c9a8a65fc92e50dd5a23708d570d06815cc76b4d3d7f86": {
+      "address": "0x1fA05e3b1910C3B34705a4AA8406fa716877C574",
+      "txHash": "0xb0b24a1a46f25bdf3ec40a53cdf002f1f1545f4b4b780ab148c4a70295fdabb8",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "initializing",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:26"
+          },
+          {
+            "contract": "Initializable",
+            "label": "______gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:61"
+          },
+          {
+            "contract": "ContextUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\GSN\\Context.sol:37"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\access\\Ownable.sol:18"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\access\\Ownable.sol:78"
+          },
+          {
+            "contract": "Manageable",
+            "label": "_manager",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Manageable.sol:21"
+          },
+          {
+            "contract": "MasterWallet",
+            "label": "_hotWallet",
+            "type": "t_address",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:17"
+          },
+          {
+            "contract": "MasterWallet",
+            "label": "_wallet",
+            "type": "t_address",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:18"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "b1f8212f4e8037b0b301fe50f52f245b9ef8d8a0c90f5e5c82f8eb5d95ed9471": {
+      "address": "0x5e11a77115F0B29F6a28eDF4BDB982Eaf5db36E9",
+      "txHash": "0x25587d755a77c7c768af93fce60929cc418c346ba548249aee3f0d443019f6ad",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "initializing",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:26"
+          },
+          {
+            "contract": "Initializable",
+            "label": "______gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:61"
+          },
+          {
+            "contract": "ContextUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\GSN\\Context.sol:37"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\access\\Ownable.sol:18"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\access\\Ownable.sol:78"
+          },
+          {
+            "contract": "Manageable",
+            "label": "_manager",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Manageable.sol:21"
+          },
+          {
+            "contract": "MasterWallet",
+            "label": "_hotWallet",
+            "type": "t_address",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:17"
+          },
+          {
+            "contract": "MasterWallet",
+            "label": "_wallet",
+            "type": "t_address",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:18"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "0c6e256a54b9aa9c2dcb9a38c4c40a1159710042b34d43e0209b36e9e4d4a15b": {
+      "address": "0xfF43eBAA11aAf1A12DEa59621cD3452561BDcCa1",
+      "txHash": "0xf19d5475d8253bec1bbe333ef49e4bca161c89c27b772de96290684a88806f20",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "initializing",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:26"
+          },
+          {
+            "contract": "Initializable",
+            "label": "______gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:61"
+          },
+          {
+            "contract": "ContextUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\GSN\\Context.sol:37"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\access\\Ownable.sol:18"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\access\\Ownable.sol:78"
+          },
+          {
+            "contract": "Manageable",
+            "label": "_manager",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Manageable.sol:21"
+          },
+          {
+            "contract": "MasterWallet",
+            "label": "_hotWallet",
+            "type": "t_address",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:17"
+          },
+          {
+            "contract": "MasterWallet",
+            "label": "_wallet",
+            "type": "t_address",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:18"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "4fc11464a2b33d3a70cab86bac9f3d7545c24dbfc4b36adf854eed5e26abba5d": {
+      "address": "0x9733aa65E4427a3619D4C384033050c96A0266AC",
+      "txHash": "0xb881e75987fc389f7611572ba368ec59852308510efdf4666a4a24636bd5c581",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "initializing",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:26"
+          },
+          {
+            "contract": "Initializable",
+            "label": "______gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:61"
+          },
+          {
+            "contract": "ContextUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\GSN\\Context.sol:37"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\access\\Ownable.sol:18"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\access\\Ownable.sol:78"
+          },
+          {
+            "contract": "Manageable",
+            "label": "_manager",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Manageable.sol:21"
+          },
+          {
+            "contract": "HotWallet",
+            "label": "_coldWallet",
+            "type": "t_address",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\HotWallet.sol:14"
+          },
+          {
+            "contract": "HotWallet",
+            "label": "_hotRate",
+            "type": "t_uint256",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\HotWallet.sol:15"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "1d1bf19999e5465a66b4a4a274463faa951f4b63bfe5a6cce08d7337aa5ead4b": {
+      "address": "0xb65bEec5742280FCD6ac5EAe76b67Ae32Ee9f7df",
+      "txHash": "0x99563beae39e30df472d5c3b737ca015d9e3d0291bdaddb85d850ce06d9cb942",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "initializing",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:26"
+          },
+          {
+            "contract": "Initializable",
+            "label": "______gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:61"
+          },
+          {
+            "contract": "Wallet",
+            "label": "_master",
+            "type": "t_address",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Wallet.sol:11"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "680cb29ca0a935de1d734a90cbbdfe363d12d2ff5a3dc2eba71ef5f403ecc4c7": {
+      "address": "0xcC499fAdB7c75c42de63909748Eb7a25d6d0e5a6",
+      "txHash": "0x6a0ff5b0032685cb85db9d3faec50e3b854833b2768142a294ecb0d771f6dee4",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "initializing",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:26"
+          },
+          {
+            "contract": "Initializable",
+            "label": "______gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\Initializable.sol:61"
+          },
+          {
+            "contract": "ContextUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\GSN\\Context.sol:37"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\access\\Ownable.sol:18"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\@openzeppelin\\contracts-ethereum-package\\contracts\\access\\Ownable.sol:78"
+          },
+          {
+            "contract": "Manageable",
+            "label": "_manager",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\Manageable.sol:21"
+          },
+          {
+            "contract": "MasterWallet",
+            "label": "_hotWallet",
+            "type": "t_address",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:17"
+          },
+          {
+            "contract": "MasterWallet",
+            "label": "_wallet",
+            "type": "t_address",
+            "src": "..\\..\\..\\..\\..\\C\\Users\\raynear\\Project\\SmartContractWallet\\contracts\\MasterWallet.sol:18"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
     }
   },
   "admin": {
-    "address": "0x1154d451D039E9a284AE8d15Dbc6fc18B6581dB3",
-    "txHash": "0x8a916ebafbde5192043d07273e91ee12bd4a874e69f81542bd52ca75a98e2a06"
+    "address": "0x68708a7Ef7e13DE0246199CEDfD2E19750dfB595",
+    "txHash": "0x9bf2f6ae17c9e480d71ba6401be02de8d4f93f9d76d68f730297ae446a0b1c8a"
   }
 }
