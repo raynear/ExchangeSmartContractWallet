@@ -1,4 +1,5 @@
 const JSHToken = artifacts.require("JSHToken");
+const NBKToken = artifacts.require("NBKToken");
 const MasterWallet = artifacts.require("MasterWallet");
 const HotWallet = artifacts.require("HotWallet");
 const Wallet = artifacts.require("Wallet");
@@ -59,16 +60,19 @@ function getInitializerData(Contract, args, initializer) {
 }
 
 module.exports = async function(deployer, network, accounts) {
-    // deployer.deploy(JSHToken, "SUHO", "JSH", 10000);
-    // console.log('deployer', deployer);
-    // console.log('network', network);
-    // console.log('accounts', accounts);
+    deployer.deploy(JSHToken, "SUHO", "JSH", 100000000);
+    deployer.deploy(NBKToken, "RAYNEAR", "NBK", 100000000);
+    console.log('deployer', deployer);
+    console.log('network', network);
+    console.log('accounts', accounts);
     // const proxy = await deployProxy(MasterWallet, ["0x5d581D59F37c8E3d4682c291C1801ad00f2a120c"], { deployer, from:accounts[1] });
-    const hotProxy= await deployProxy(HotWallet, [accounts[0]], { deployer });
-    console.log(hotProxy.address);
+    // const hotProxy= await deployProxy(HotWallet, [accounts[0], accounts[0]], { deployer });
+    // console.log(hotProxy.address);
+    // console.log(HotWallet.address);
+    // const hotProxy= await deployProxy(HotWallet, [accounts[0], accounts[0]], { deployer });
     // const walletProxy = await deployProxyCustom(Wallet, [accounts[0]], { deployer }, accounts[1]);
     // console.log(walletProxy.address);
-    const wallet = await deployer.deploy(Wallet, {from:accounts[1]});
-    const masterProxy = await deployProxy(MasterWallet, [hotProxy.address, wallet.address], { deployer });
-    console.log(masterProxy.address);
+    // const wallet = await deployer.deploy(Wallet, {from:accounts[1]});
+    // const masterProxy = await deployProxy(MasterWallet, [hotProxy.address, wallet.address], { deployer });
+    // console.log(masterProxy.address);
 };

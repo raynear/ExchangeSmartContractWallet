@@ -15,7 +15,7 @@
     "@babel/polyfill": "^7.12.1",
     "@openzeppelin/contracts-upgradeable": "^3.3.0",
     "@optionality.io/clone-factory": "^0.2.1",
-    "@truffle/contract": "^4.3.4",
+    "@truffle/contract": "^4.3.19",
     "abi-decoder": "^2.3.0",
     "ethereumjs-util": "^7.0.8",
     "ethereumjs-wallet": "^1.0.1",
@@ -29,7 +29,7 @@
   "devDependencies": {
     "@openzeppelin/contracts-ethereum-package": "^3.0.0",
     "@openzeppelin/truffle-upgrades": "^1.4.0",
-    "@truffle/hdwallet-provider": "^1.2.1",
-    "truffle": "^5.1.62"
+    "@truffle/hdwallet-provider": "^1.4.0",
+    "truffle": "^5.3.9"
   }
 }

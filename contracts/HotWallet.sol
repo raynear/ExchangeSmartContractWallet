@@ -17,10 +17,19 @@ contract HotWallet is Manageable {
 
     event ColdWalletChanged(address coldWalletAddress);
 
-    function initialize(address owner) public initializer {
+    function initialize(address owner, address master) public initializer {
         __Manageable_init();
         _coldWallet = owner;
-        _hotRate = 30;
+        _masterAccount = master;
+        _hotRate = 25;
+    }
+
+    function setMasterAccount(address account) public onlyOwner {
+        _masterAccount = account;
+    }
+
+    function getMasterAccount() public returns(address) {
+        return _masterAccount;
     }
 
     function changeHotRate(uint hotRate) public onlyOwner {
@@ -28,7 +37,7 @@ contract HotWallet is Manageable {
         _hotRate = hotRate;
     }
 
-    function sendTokens(address[] memory tokenAddress, address[] memory target, uint256[] memory amount, uint nonce, bytes signature) public payable onlyManager {
+    function sendTokens(address[] memory tokenAddress, address[] memory target, uint256[] memory amount, uint nonce, bytes memory signature) public payable onlyManager {
         require(verify(nonce, signature));
         require(tokenAddress.length == target.length && target.length == amount.length);
         for(uint i=0 ; i<tokenAddress.length ; i++) {
@@ -92,14 +101,19 @@ contract HotWallet is Manageable {
         return SafeMath.mul(SafeMath.div(d,m),m);
     }
 
-    function getEthSignedMessageHash(uint _nonce) public pure returns (bytes32) {
+    function getEthSignedMessageHash(bytes32 _messageHash) public pure returns (bytes32) {
+        return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", _messageHash));
+    }
+    
+    function getMessageHash(uint _nonce) public returns (bytes32) {
         return keccak256(abi.encodePacked(msg.sender, _nonce));
     }
 
-    function verify(uint _nonce, bytes memory signature) public pure returns (bool) {
-        bytes32 messageHash = getEthSignedMessageHash(_nonce);
+    function verify(uint _nonce, bytes memory signature) public returns (bool) {
+        bytes32 messageHash = getMessageHash(_nonce);
+        bytes32 ethSignedMessageHash = getEthSignedMessageHash(messageHash);
 
-        return recoverSigner(messageHash, signature) == _masterAccount;
+        return recoverSigner(ethSignedMessageHash, signature) == _masterAccount;
     }
 
     function recoverSigner(bytes32 _ethSignedMessageHash, bytes memory _signature)
